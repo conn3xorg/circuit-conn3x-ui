@@ -124,7 +124,7 @@ Requires Conn3x v0.21.0 or later, systemd on each host, and outbound HTTPS to gi
 
 ## Tested on
 
-CI applies [examples/local](examples/local) to Rocky Linux 10, Fedora 45, Ubuntu 24.04 and Debian 13 on amd64. It checks that the second plan has no changes, that the sign-in page answers from outside the host, that the first admin password is in the log, that the key is `0640`, and that the UI's user runs the pinned `conn3x`. Then it restarts the UI and checks the sign-in page again.
+CI applies [examples/local](examples/local) to Rocky Linux 10, Fedora 45, Ubuntu 24.04 and Debian 13 on amd64. It checks that the second plan has no changes, that the sign-in page answers from outside the host, that the first admin password is in the log, that the key is `0640`, and that the UI's user runs the pinned `conn3x`. Then it restarts the UI and checks the sign-in page again. On a fresh host it then installs conn3x-ui 0.1.0, applies the circuit's pin over it, and checks that the plan has no changes, the running UI is the pinned release, and the key is the one it started with.
 
 ## License
 
