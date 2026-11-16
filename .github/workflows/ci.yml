@@ -86,6 +86,30 @@ jobs:
           podman exec circuit-conn3x-ui runuser -u conn3x-ui -- env PATH="/opt/conn3x-ui/conn3x-$want:/usr/bin:/bin" conn3x version | grep -F "Conn3x v$want"
           podman exec circuit-conn3x-ui systemctl restart conn3x-ui
           check
+      # A fresh host gets the previous release, then the circuit's own pin is
+      # applied over it, the way someone raises conn3x_ui_version. The UI
+      # keeps its database and key across the restart.
+      - name: Upgrade from conn3x-ui 0.1.0 on a fresh host, then plan again with no changes
+        working-directory: examples/local
+        env:
+          CONTAINERFILE: ${{ github.workspace }}/conn3x/test/images/${{ matrix.distro }}/Containerfile
+        run: |
+          running() {
+            curl -fsS --retry 10 --retry-all-errors --retry-delay 1 --max-time 5 -o login.html http://127.0.0.1:8080/login
+            grep -qi 'sign in' login.html
+            podman exec circuit-conn3x-ui sh -c 'tr "\0" " " < /proc/$(systemctl show -p MainPID --value conn3x-ui)/cmdline' | grep -F "/conn3x-ui-$1/conn3x-ui serve"
+          }
+          ./down.sh
+          ./up.sh
+          conn3x init
+          conn3x apply -auto-approve -var conn3x_ui_version=0.1.0 \
+            -var 'conn3x_ui_checksums={amd64="bf5385b4ed3d2f0e05ae84455649701481b1efb13184d3af7554fc8ab5ba7156",arm64="98fc3e7626cadfaa2a5488dadc3b6c5f2429380fe95651d1607157a0bf81793c"}'
+          running 0.1.0
+          key=$(podman exec circuit-conn3x-ui sha256sum /etc/conn3x-ui/key)
+          conn3x apply -auto-approve
+          conn3x plan -detailed-exitcode
+          running "$(sed -n '/variable "conn3x_ui_version"/,/}/s/^ *default *= *"\(.*\)"/\1/p' ../../variables.tf)"
+          [ "$(podman exec circuit-conn3x-ui sha256sum /etc/conn3x-ui/key)" = "$key" ]
       - name: Clean up
         if: always()
         working-directory: examples/local
