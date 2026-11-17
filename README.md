@@ -8,7 +8,7 @@ A Conn3x circuit that installs [conn3x-ui](https://github.com/conn3xorg/conn3x-u
 
 ```hcl
 module "conn3x_ui" {
-  source = "github.com/conn3xorg/circuit-conn3x-ui?ref=v0.1.1"
+  source = "github.com/conn3xorg/circuit-conn3x-ui?ref=v0.1.2"
 
   hosts                = { ops1 = "203.0.113.20" }
   ssh_private_key_file = "~/.ssh/id_ed25519"
@@ -45,7 +45,7 @@ On each host, in order:
 2. Creates the `conn3x-ui` system user, with home `/var/lib/conn3x-ui` and no login shell.
 3. Makes `/var/lib/conn3x-ui` (`0700`, the UI's user only) for the database, saved plans and run credentials, and `/etc/conn3x-ui` (`0750`, root and the UI's group).
 4. Downloads the `conn3x-ui` and `conn3x` release archives for the host's architecture into `/opt/conn3x-ui`. If a checksum doesn't match, the apply fails and nothing is unpacked.
-5. Unpacks each into a directory of its own, such as `/opt/conn3x-ui/conn3x-ui-0.1.1/`.
+5. Unpacks each into a directory of its own, such as `/opt/conn3x-ui/conn3x-ui-0.2.0/`.
 6. Makes the credentials key, `/etc/conn3x-ui/key` (`0640`, root and the UI's group), from `/dev/urandom`, if there isn't one. It's made once and never replaced by the circuit.
 7. Writes `/etc/systemd/system/conn3x-ui.service`, and restarts the UI when the file changes. A project's `conn3x` binary, the default, is the pinned release, through the unit's `PATH`.
 8. Starts the UI now and at boot.
@@ -66,13 +66,13 @@ Set a version and its checksums together, from the release's `checksums.txt`:
 
 ```hcl
 module "conn3x_ui" {
-  source = "github.com/conn3xorg/circuit-conn3x-ui?ref=v0.1.1"
+  source = "github.com/conn3xorg/circuit-conn3x-ui?ref=v0.1.2"
 
   hosts             = { ops1 = "203.0.113.20" }
-  conn3x_ui_version = "0.1.1"
+  conn3x_ui_version = "0.2.0"
   conn3x_ui_checksums = {
-    amd64 = "7ee009393cfcf5563a05d25b895abfae42c2ee1694e0192a1664658f6f75a2e1"
-    arm64 = "80fe1d46dbdc4240ccdc5d4f5ac82ae9cc5670b95058f2824525d34fd393f7d4"
+    amd64 = "0e68c71a1121ff664d6a23cff9b11d4a91d13fba5327952b74018f7974171920"
+    arm64 = "251a8df9c1cd678b4d9ad1db7a44eea834816f4a70bb58dd83ea8f38980bc687"
   }
 }
 ```
@@ -104,8 +104,8 @@ Put the secret in `/etc/conn3x-ui/oidc-secret`, readable by the `conn3x-ui` grou
 | `ssh_private_key_file` | string | `null` | Path to a private key. When null, Conn3x uses the SSH agent. |
 | `ssh_known_hosts_file` | string | `null` | known_hosts file to check host keys against. When null, `~/.ssh/known_hosts`. |
 | `ssh_become` | bool | `false` | Run commands as root through sudo. Set it when `ssh_user` isn't root. |
-| `conn3x_ui_version` | string | `"0.1.1"` | conn3x-ui release to install, without the leading `v`. |
-| `conn3x_ui_checksums` | map(string) | The 0.1.1 checksums | SHA-256 of the conn3x-ui archive for `amd64` and `arm64`. |
+| `conn3x_ui_version` | string | `"0.2.0"` | conn3x-ui release to install, without the leading `v`. |
+| `conn3x_ui_checksums` | map(string) | The 0.2.0 checksums | SHA-256 of the conn3x-ui archive for `amd64` and `arm64`. |
 | `conn3x_version` | string | `"0.22.0"` | Conn3x release the UI runs, without the leading `v`. A project can name another binary. |
 | `conn3x_checksums` | map(string) | The 0.22.0 checksums | SHA-256 of the conn3x archive for `amd64` and `arm64`. |
 | `listen` | string | `"127.0.0.1:8080"` | Address the UI listens on. Keep it on loopback behind a TLS proxy. |
