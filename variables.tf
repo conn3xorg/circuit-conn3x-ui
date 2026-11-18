@@ -59,13 +59,13 @@ variable "conn3x_ui_checksums" {
 
 variable "conn3x_version" {
   type        = string
-  default     = "0.25.0"
+  default     = "0.26.0"
   nullable    = false
   description = "Conn3x release the UI runs plans and applies with, without the leading v. A project can name another binary. Null means the default."
 
   validation {
     condition     = can(regex("^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.]+)?$", var.conn3x_version))
-    error_message = "conn3x_version is a release number without the leading v, such as \"0.25.0\"."
+    error_message = "conn3x_version is a release number without the leading v, such as \"0.26.0\"."
   }
 }
 
@@ -74,8 +74,8 @@ variable "conn3x_checksums" {
   nullable    = false
   description = "SHA-256 of the conn3x release archive for each architecture, from the release's checksums.txt. Change these with conn3x_version. Null means the default."
   default = {
-    amd64 = "57438ed59d8e48779c1a44427f5b99bab44e5596306d6783f1534b444f6f161e"
-    arm64 = "6be413899b7823c101758f8aa70c6813d550c1818e300d825c83f60969dd41eb"
+    amd64 = "ffd9bc17ef5ada3e5877411f897835be0c555aadadcae64d3f32fcdcc6be9cc4"
+    arm64 = "13d1964821d666917d6741adce87e89bd0f376f033f86b51016412cb4a7d6c82"
   }
 }
 
