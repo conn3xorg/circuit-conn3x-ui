@@ -37,13 +37,13 @@ variable "ssh_become" {
 
 variable "conn3x_ui_version" {
   type        = string
-  default     = "0.2.0"
+  default     = "0.3.0"
   nullable    = false
   description = "conn3x-ui release to install, without the leading v. Null means the default."
 
   validation {
     condition     = can(regex("^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.]+)?$", var.conn3x_ui_version))
-    error_message = "conn3x_ui_version is a release number without the leading v, such as \"0.2.0\"."
+    error_message = "conn3x_ui_version is a release number without the leading v, such as \"0.3.0\"."
   }
 }
 
@@ -52,8 +52,8 @@ variable "conn3x_ui_checksums" {
   nullable    = false
   description = "SHA-256 of the conn3x-ui release archive for each architecture, from the release's checksums.txt. Change these with conn3x_ui_version. Null means the default."
   default = {
-    amd64 = "0e68c71a1121ff664d6a23cff9b11d4a91d13fba5327952b74018f7974171920"
-    arm64 = "251a8df9c1cd678b4d9ad1db7a44eea834816f4a70bb58dd83ea8f38980bc687"
+    amd64 = "3475d9c51fed001ffc678868457dd328254f4576c372d909d08cb35ce8b2c3e6"
+    arm64 = "a824c148c0a1dfb720447460f2940c8e4fc4d6a73148d8362ca05b38d02f06ea"
   }
 }
 
