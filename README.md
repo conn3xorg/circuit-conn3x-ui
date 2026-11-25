@@ -8,7 +8,7 @@ A Conn3x circuit that installs [conn3x-ui](https://github.com/conn3xorg/conn3x-u
 
 ```hcl
 module "conn3x_ui" {
-  source = "github.com/conn3xorg/circuit-conn3x-ui?ref=v0.1.14"
+  source = "github.com/conn3xorg/circuit-conn3x-ui?ref=v0.1.15"
 
   hosts                = { ops1 = "203.0.113.20" }
   ssh_private_key_file = "~/.ssh/id_ed25519"
@@ -66,7 +66,7 @@ Set a version and its checksums together, from the release's `checksums.txt`:
 
 ```hcl
 module "conn3x_ui" {
-  source = "github.com/conn3xorg/circuit-conn3x-ui?ref=v0.1.14"
+  source = "github.com/conn3xorg/circuit-conn3x-ui?ref=v0.1.15"
 
   hosts             = { ops1 = "203.0.113.20" }
   conn3x_ui_version = "0.4.1"
