@@ -106,8 +106,8 @@ Put the secret in `/etc/conn3x-ui/oidc-secret`, readable by the `conn3x-ui` grou
 | `ssh_become` | bool | `false` | Run commands as root through sudo. Set it when `ssh_user` isn't root. |
 | `conn3x_ui_version` | string | `"0.4.1"` | conn3x-ui release to install, without the leading `v`. |
 | `conn3x_ui_checksums` | map(string) | The 0.4.1 checksums | SHA-256 of the conn3x-ui archive for `amd64` and `arm64`. |
-| `conn3x_version` | string | `"0.38.0"` | Conn3x release the UI runs, without the leading `v`. A project can name another binary. |
-| `conn3x_checksums` | map(string) | The 0.38.0 checksums | SHA-256 of the conn3x archive for `amd64` and `arm64`. |
+| `conn3x_version` | string | `"0.39.0"` | Conn3x release the UI runs, without the leading `v`. A project can name another binary. |
+| `conn3x_checksums` | map(string) | The 0.39.0 checksums | SHA-256 of the conn3x archive for `amd64` and `arm64`. |
 | `listen` | string | `"127.0.0.1:8080"` | Address the UI listens on. Keep it on loopback behind a TLS proxy. |
 | `extra_args` | list(string) | `[]` | More flags for `conn3x-ui serve`, such as the `-oidc-*` ones. Each one is passed as a single argument, as written. |
 
